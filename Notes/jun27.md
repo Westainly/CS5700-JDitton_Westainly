@@ -67,8 +67,13 @@
 - If you see yourself copy pasting code, you most likely have poor encapsulation.
     - you do not want things spread across the software
     - Try to localize everything
+- Strategy Pattern
+    - Similar implementations that require minor differences between them.
+    - All the shared logic is maintained in a single locations
+    - needed logic for separate needs has added logic on top of the shared logic.
 
-
+## Policy
+- Program to an interface(abstraction) rather than an implementation.
 
 
 [Main Notes Page](/Notes/mainNotes.md)
