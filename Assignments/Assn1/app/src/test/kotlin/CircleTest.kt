@@ -14,4 +14,13 @@ internal class CircleTest {
         circle.move(1.0, 1.0)
         assertEquals(Triple(Point(3.0, 4.0), radius, radius), circle.getAttributes())
     }
+    
+    @Test
+    fun testCircleWithZeroRadius() {
+        val center = Point(2.0, 3.0)
+        
+        assertFailsWith<IllegalArgumentException> {
+            Circle(center, 0.0)
+        }
+    }
 }

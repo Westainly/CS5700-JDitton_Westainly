@@ -15,4 +15,12 @@ internal class SquareTest {
         assertEquals(Pair(Point(2.0, 2.0), Point(5.0, -1.0)), square.getPoints())
     }
     
+    @Test
+    fun testSquareWithZeroSideLength() {
+        val topLeft = Point(1.0, 1.0)
+        
+        assertFailsWith<IllegalArgumentException> {
+            Square(topLeft, 0.0)
+        }
+    }
 }

@@ -15,4 +15,22 @@ internal class EllipseTest {
         ellipse.move(1.0, 1.0)
         assertEquals(Triple(Point(3.0, 4.0), radiusX, radiusY), ellipse.getAttributes())
     }
+
+    @Test
+    fun testEllipseWithZeroRadiusY() {
+        val center = Point(2.0, 3.0)
+        
+        assertFailsWith<IllegalArgumentException> {
+            Ellipse(center, 4.0, 0.0)
+        }
+    }
+
+    @Test
+    fun testEllipseWithZeroRadiusX() {
+        val center = Point(2.0, 3.0)
+        
+        assertFailsWith<IllegalArgumentException> {
+            Ellipse(center, 0.0, 5.0)
+        }
+    }
 }

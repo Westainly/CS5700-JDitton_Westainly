@@ -15,4 +15,14 @@ internal class LineTest {
         line.move(1.0, 1.0)
         assertEquals(Pair(Point(2.0, 2.0), Point(5.0, 6.0)), line.getPoints())
     }
+
+    @Test
+    fun testLineWithZeroLength() {
+        val point1 = Point(1.0, 1.0)
+        val point2 = Point(1.0, 1.0)
+        
+        assertFailsWith<IllegalArgumentException> {
+            Line(point1, point2)
+        }
+    }
 }
