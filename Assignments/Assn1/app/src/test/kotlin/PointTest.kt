@@ -11,6 +11,7 @@ internal class PointTests {
         val clonedPoint = point.clone()
         assertEquals(1.0, clonedPoint.xCoord)
         assertEquals(2.0, clonedPoint.yCoord)
+        assertEquals(point, clonedPoint)
 
         point.move(1.0, 1.0)
         assertEquals(2.0, point.xCoord)
