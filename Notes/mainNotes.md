@@ -4,3 +4,4 @@
 [June 27](/Notes/jun27.md) Abstraction/Inheritance/Unit Tests  
 [July 2](/Notes/jul2.md) Modularity/Observer pattern   
 [July 9](/Notes/jul9.md) Observer Pattern/ Starting Decorator Pattern
+[July 11](/Notes/jul11.md) Factory Patterns
