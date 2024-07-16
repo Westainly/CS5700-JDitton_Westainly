@@ -1,10 +1,11 @@
-class Shipment(val id: String) {
-    var status: String = "created"
-    var expectedDeliveryDateTimestamp: Long? = null
-    var currentLocation: String = ""
-    private val notes = mutableListOf<String>()
-    private val updateHistory = mutableListOf<ShipmentUpdate>()
-
+data class Shipment(
+    val id: String,
+    var status: String,
+    var currentLocation: String = "",
+    var expectedDeliveryDateTimestamp: Long = 0L,
+    private val notes: MutableList<String> = mutableListOf(),
+    private val updateHistory: MutableList<ShipmentUpdate> = mutableListOf()
+) {
     fun addNote(note: String) {
         notes.add(note)
     }

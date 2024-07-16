@@ -1,9 +1,6 @@
-import kotlinx.coroutines.*
-import java.util.concurrent.ConcurrentHashMap
-
 class TrackingSimulatorObserver {
     private val observers = mutableListOf<TrackingObserver>()
-    private val shipments = ConcurrentHashMap<String, Shipment>()
+    private val shipments = mutableMapOf<String, Shipment>()
 
     fun addObserver(observer: TrackingObserver) {
         observers.add(observer)
@@ -13,9 +10,19 @@ class TrackingSimulatorObserver {
         observers.remove(observer)
     }
 
-    fun processUpdate(update: ShipmentUpdate) {
-        val shipment = shipments.computeIfAbsent(update.shipmentId) { Shipment(update.shipmentId) }
-        val strategy: UpdateStrategy = when (update.updateType) {
+    fun notifyObservers(shipment: Shipment) {
+        observers.forEach { it.onShipmentUpdate(shipment) }
+    }
+
+    suspend fun processUpdate(update: ShipmentUpdate) {
+        val shipment = shipments[update.shipmentId] ?: if (update.updateType == "created") {
+            Shipment(update.shipmentId, update.updateType).also { shipments[update.shipmentId] = it }
+        } else {
+            return // Skip updates for non-existing shipments
+        }
+
+        val previousStatus = shipment.status
+        val strategy = when (update.updateType) {
             "created" -> CreatedStrategy()
             "shipped" -> ShippedStrategy()
             "location" -> LocationStrategy()
@@ -26,25 +33,17 @@ class TrackingSimulatorObserver {
             "noteadded" -> NoteAddedStrategy()
             else -> throw IllegalArgumentException("Unknown update type: ${update.updateType}")
         }
+
         strategy.processUpdate(shipment, update)
-        shipment.addUpdate(update)
+        shipment.addUpdate(update.copy(previousStatus = previousStatus, newStatus = shipment.status))
         notifyObservers(shipment)
-    }
-
-    private fun notifyObservers(shipment: Shipment) {
-        observers.forEach { it.onShipmentUpdate(shipment) }
-    }
-
-    fun runSimulation(updates: List<ShipmentUpdate>) {
-        CoroutineScope(Dispatchers.Default).launch {
-            for (update in updates) {
-                processUpdate(update)
-                delay(1000L)
-            }
-        }
     }
 
     fun findShipment(id: String): Shipment? {
         return shipments[id]
+    }
+
+    fun getAllShipments(): List<Shipment> {
+        return shipments.values.toList()
     }
 }
