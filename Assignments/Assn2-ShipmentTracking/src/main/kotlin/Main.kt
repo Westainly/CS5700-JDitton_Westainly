@@ -1,27 +1,21 @@
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 
 @Composable
 @Preview
 fun App() {
-    var text by remember { mutableStateOf("Hello, World!") }
+    val trackingSimulator = TrackingSimulatorObserver()
 
-    MaterialTheme {
-        Button(onClick = {
-            text = "Hello, Desktop!"
-        }) {
-            Text(text)
-        }
-    }
+    // Initialize the simulator with some data or from a file
+    // For example:
+    // trackingSimulator.runSimulation(listOf(
+    //     ShipmentUpdate("created", "1243234", 1999283774),
+    //     ShipmentUpdate("shipped", "1243234", 1999437478, "19999488398")
+    // ))
+
+    UserInterface(trackingSimulator = trackingSimulator)
 }
 
 fun main() = application {
