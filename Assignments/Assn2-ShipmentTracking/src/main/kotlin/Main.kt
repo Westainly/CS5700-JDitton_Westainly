@@ -31,7 +31,7 @@ fun App() {
 }
 
 suspend fun runSimulation(): String {
-    val simulator = TrackingSimulatorObserver()
+    val simulator = TrackingSimulator()
     val updates = mutableListOf<ShipmentUpdate>()
 
     // Read updates from the file

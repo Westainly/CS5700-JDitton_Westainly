@@ -18,7 +18,7 @@ class TrackerViewHelper : TrackingObserver {
         }
     }
 
-    fun trackShipment(id: String, simulator: TrackingSimulatorObserver) {
+    fun trackShipment(id: String, simulator: TrackingSimulator) {
         val shipment = simulator.findShipment(id)
         if (shipment != null) {
             shipmentId.value = shipment.id

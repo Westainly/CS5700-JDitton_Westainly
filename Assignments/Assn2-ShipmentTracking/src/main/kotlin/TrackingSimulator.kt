@@ -1,4 +1,4 @@
-class TrackingSimulatorObserver {
+class TrackingSimulator {
     private val observers = mutableListOf<TrackingObserver>()
     private val shipments = mutableMapOf<String, Shipment>()
 

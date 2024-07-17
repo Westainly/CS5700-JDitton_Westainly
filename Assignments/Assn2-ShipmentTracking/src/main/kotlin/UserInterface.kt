@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
 @Composable
-fun UserInterface(trackingSimulator: TrackingSimulatorObserver) {
+fun UserInterface(trackingSimulator: TrackingSimulator) {
     val viewHelper = remember { TrackerViewHelper() }
     val shipmentId by viewHelper.shipmentId
     val shipmentNotes by viewHelper.shipmentNotes

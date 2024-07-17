@@ -1,11 +1,11 @@
 import kotlinx.coroutines.runBlocking
 import kotlin.test.*
 
-class TrackingSimulatorObserverTest {
+class TrackingSimulatorTest {
 
     @Test
     fun testAddObserver() {
-        val simulator = TrackingSimulatorObserver()
+        val simulator = TrackingSimulator()
         val observer = object : TrackingObserver {
             override fun onShipmentUpdate(shipment: Shipment) {}
         }
@@ -16,7 +16,7 @@ class TrackingSimulatorObserverTest {
 
     @Test
     fun testRemoveObserver() {
-        val simulator = TrackingSimulatorObserver()
+        val simulator = TrackingSimulator()
         val observer = object : TrackingObserver {
             override fun onShipmentUpdate(shipment: Shipment) {}
         }
@@ -28,7 +28,7 @@ class TrackingSimulatorObserverTest {
 
     @Test
     fun testProcessUpdateCreated() = runBlocking {
-        val simulator = TrackingSimulatorObserver()
+        val simulator = TrackingSimulator()
         val update = ShipmentUpdate("created", "12345", 1234567890L)
         simulator.processUpdate(update)
 
@@ -39,7 +39,7 @@ class TrackingSimulatorObserverTest {
 
     @Test
     fun testProcessUpdateShipped() = runBlocking {
-        val simulator = TrackingSimulatorObserver()
+        val simulator = TrackingSimulator()
         val update = ShipmentUpdate("shipped", "12345", 1234567890L, "1234567891")
         simulator.processUpdate(update)
 
@@ -51,7 +51,7 @@ class TrackingSimulatorObserverTest {
 
     @Test
     fun testProcessUpdateLocation() = runBlocking {
-        val simulator = TrackingSimulatorObserver()
+        val simulator = TrackingSimulator()
         val update = ShipmentUpdate("location", "12345", 1234567890L, "Los Angeles CA")
         simulator.processUpdate(update)
 
@@ -62,7 +62,7 @@ class TrackingSimulatorObserverTest {
 
     @Test
     fun testProcessUpdateDelivered() = runBlocking {
-        val simulator = TrackingSimulatorObserver()
+        val simulator = TrackingSimulator()
         val update = ShipmentUpdate("delivered", "12345", 1234567890L)
         simulator.processUpdate(update)
 
@@ -73,7 +73,7 @@ class TrackingSimulatorObserverTest {
 
     @Test
     fun testProcessUpdateDelayed() = runBlocking {
-        val simulator = TrackingSimulatorObserver()
+        val simulator = TrackingSimulator()
         val update = ShipmentUpdate("delayed", "12345", 1234567890L, "1234567892")
         simulator.processUpdate(update)
 
@@ -84,7 +84,7 @@ class TrackingSimulatorObserverTest {
 
     @Test
     fun testProcessUpdateLost() = runBlocking {
-        val simulator = TrackingSimulatorObserver()
+        val simulator = TrackingSimulator()
         val update = ShipmentUpdate("lost", "12345", 1234567890L)
         simulator.processUpdate(update)
 
@@ -95,7 +95,7 @@ class TrackingSimulatorObserverTest {
 
     @Test
     fun testProcessUpdateCanceled() = runBlocking {
-        val simulator = TrackingSimulatorObserver()
+        val simulator = TrackingSimulator()
         val update = ShipmentUpdate("canceled", "12345", 1234567890L)
         simulator.processUpdate(update)
 
@@ -106,7 +106,7 @@ class TrackingSimulatorObserverTest {
 
     @Test
     fun testProcessUpdateNoteAdded() = runBlocking {
-        val simulator = TrackingSimulatorObserver()
+        val simulator = TrackingSimulator()
         val update = ShipmentUpdate("noteadded", "12345", 1234567890L, "packaging was damaged slightly during shipping")
         simulator.processUpdate(update)
 
@@ -117,7 +117,7 @@ class TrackingSimulatorObserverTest {
 
     @Test
     fun testProcessUpdateUnknownType() {
-        val simulator = TrackingSimulatorObserver()
+        val simulator = TrackingSimulator()
         val update = ShipmentUpdate("unknownType", "12345", 1234567890L)
 
         val exception = assertFailsWith<IllegalArgumentException> {

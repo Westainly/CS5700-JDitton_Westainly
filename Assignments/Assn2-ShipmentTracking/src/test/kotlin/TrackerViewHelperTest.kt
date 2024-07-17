@@ -4,7 +4,7 @@ class TrackerViewHelperTest {
 
     @Test
     fun testTrackShipment() {
-        val simulator = TrackingSimulatorObserver()
+        val simulator = TrackingSimulator()
         val update = ShipmentUpdate("created", "12345", 1234567890L)
         simulator.processUpdate(update)
         val viewHelper = TrackerViewHelper()
