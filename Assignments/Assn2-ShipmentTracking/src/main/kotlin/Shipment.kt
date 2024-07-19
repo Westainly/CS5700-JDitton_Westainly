@@ -1,20 +1,45 @@
-data class Shipment(
-    val id: String,
+class Shipment(
     var status: String,
-    var currentLocation: String = "",
-    var expectedDeliveryDateTimestamp: Long = 0L,
-    private val notes: MutableList<String> = mutableListOf(),
-    private val updateHistory: MutableList<ShipmentUpdate> = mutableListOf()
+    val id: String,
 ) {
-    fun addNote(note: String) {
+    var currentLocation: String = ""
+        set(value) {
+            field = value
+            notifySubs()
+        }
+    val notes = mutableListOf<String>()
+    val updateHistory = mutableListOf<ShippingUpdate>()
+    var expectedDelivery: Long = 0
+        set(value) {
+            field = value
+            notifySubs()
+        }
+
+    private val subscribers = mutableListOf<ShipmentObserver>()
+
+    fun subscribe(observer: ShipmentObserver){
+       subscribers.add(observer)
+    }
+
+    fun unsubscribe(observer: ShipmentObserver){
+        subscribers.remove(observer)
+    }
+
+    private fun notifySubs(){
+        subscribers.forEach {
+            it.notify(this)
+        }
+    }
+
+    fun addNotes(note: String){
         notes.add(note)
+        notifySubs()
     }
 
-    fun getNotes(): List<String> = notes
-
-    fun addUpdate(update: ShipmentUpdate) {
+    fun addUpdate(update: ShippingUpdate){
         updateHistory.add(update)
+        notifySubs()
     }
 
-    fun getUpdateHistory(): List<ShipmentUpdate> = updateHistory
+
 }

@@ -1,38 +1,37 @@
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 
-class TrackerViewHelper : TrackingObserver {
-    val shipmentId = mutableStateOf("")
-    val shipmentNotes = mutableStateOf<List<String>>(emptyList())
-    val shipmentUpdateHistory = mutableStateOf<List<String>>(emptyList())
-    val expectedShipmentDeliveryDate = mutableStateOf("")
-    val shipmentStatus = mutableStateOf("")
+class TrackerViewHelper(
+    private var shipment: Shipment
+): ShipmentObserver {
+    val shipmentID by mutableStateOf(shipment.id)
+    var shipmentNotes by mutableStateOf(shipment.notes)
+        private set
+    var shipmentUpdateHistory by mutableStateOf(shipment.updateHistory)
+        private set
+    var shipmentExpectedDelivery by mutableStateOf(shipment.expectedDelivery)
+        private set
+    var shipmentStatus by mutableStateOf(shipment.status)
+        private set
+    var shipmentLocation by mutableStateOf(shipment.currentLocation)
+        private set
 
-    override fun onShipmentUpdate(shipment: Shipment) {
-        if (shipment.id == shipmentId.value) {
-            shipmentNotes.value = shipment.getNotes()
-            shipmentUpdateHistory.value = shipment.getUpdateHistory().map { update ->
-                "Shipment went from ${update.updateType} to ${shipment.status} on ${update.timestamp}"
-            }
-            expectedShipmentDeliveryDate.value = shipment.expectedDeliveryDateTimestamp?.toString() ?: "N/A"
-            shipmentStatus.value = shipment.status
-        }
+    init {
+        shipment.subscribe(this)
     }
 
-    fun trackShipment(id: String, simulator: TrackingSimulator) {
-        val shipment = simulator.findShipment(id)
-        if (shipment != null) {
-            shipmentId.value = shipment.id
-            onShipmentUpdate(shipment)
-        } else {
-            shipmentStatus.value = "Shipment not found"
-        }
+    override fun notify(shipment: Shipment){
+        this.shipment = shipment
+        shipmentNotes = shipment.notes
+        shipmentUpdateHistory = shipment.updateHistory
+        shipmentStatus = shipment.status
+        shipmentLocation = shipment.currentLocation
+        shipmentExpectedDelivery = shipment.expectedDelivery
     }
 
-    fun stopTracking() {
-        shipmentId.value = ""
-        shipmentNotes.value = emptyList()
-        shipmentUpdateHistory.value = emptyList()
-        expectedShipmentDeliveryDate.value = ""
-        shipmentStatus.value = ""
+    fun unsub(){
+        shipment.unsubscribe(this)
     }
+
 }
