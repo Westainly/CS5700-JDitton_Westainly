@@ -36,9 +36,8 @@ fun App() {
                         ?.let { shipments.add(it) }
                     shipmentIdSearch = ""
                 },
-                    modifier = Modifier.fillMaxWidth()
                 ){
-                    Text("Search")
+                    Text("Track Shipment")
                 }
             }
             LazyColumn {
