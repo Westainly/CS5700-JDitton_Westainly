@@ -14,33 +14,27 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import io.ktor.http.*
-import io.ktor.server.application.*
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.io.File
 import java.util.*
 
-const val DAYS1 =86400
+const val DAYS1 = 86400
 const val DAYS3 = 259200
 
 @Composable
 @Preview
 fun App() {
-    var shipmentIdSearch by remember { mutableStateOf("")}
-    val shipments = remember { mutableStateListOf<TrackerViewHelper>()}
+    var shipmentIdSearch by remember { mutableStateOf("") }
+    val shipments = remember { mutableStateListOf<TrackerViewHelper>() }
 
     MaterialTheme {
         Column {
             Row {
                 TextField(
                     value = shipmentIdSearch,
-                    onValueChange = { shipmentIdSearch = it},
-                    modifier = Modifier.fillMaxWidth(fraction = 0.8f))
+                    onValueChange = { shipmentIdSearch = it },
+                    modifier = Modifier.fillMaxWidth(fraction = 0.8f)
+                )
 
                 Button(onClick = {
                     TrackingSimulator.findShipment(shipmentIdSearch)?.let { TrackerViewHelper(it) }
@@ -48,36 +42,34 @@ fun App() {
                     shipmentIdSearch = ""
                 },
                     modifier = Modifier.fillMaxWidth()
-                ){
-                    Text("Search")
+                ) {
+                    Text("ShipmentId")
                 }
             }
             LazyColumn {
-                items(shipments, key = {it.shipmentID}) {
-                    Column (modifier = Modifier
+                items(shipments, key = { it.shipmentID }) {
+                    Column(modifier = Modifier
                         .padding(8.dp)
                         .border(1.dp, Color.Black, shape = RoundedCornerShape(4.dp))
-                        ){
+                    ) {
                         Text("Tracking shipment: ${it.shipmentID}")
                         Text("Status: ${it.shipmentStatus}")
                         Text("Location: ${it.shipmentLocation}")
                         Text("Expected Delivery: ${Date(it.shipmentExpectedDelivery)}")
-                        Spacer(modifier = Modifier
-                            .padding(8.dp))
+                        Spacer(modifier = Modifier.padding(8.dp))
                         Text("Status Updates:")
-                        it.shipmentUpdateHistory.forEach{ update ->
+                        it.shipmentUpdateHistory.forEach { update ->
                             Text("Shipment went from ${update.previousStatus} to ${update.newStatus} at ${Date(update.timeStamp)}")
                         }
-                        Spacer(modifier = Modifier
-                            .padding(4.dp))
+                        Spacer(modifier = Modifier.padding(4.dp))
                         Text("Notes:")
-                        it.shipmentNotes.forEach{ note ->
+                        it.shipmentNotes.forEach { note ->
                             Text(note)
                         }
                         Button(onClick = {
                             it.unsub()
                             shipments.remove(it)
-                        }){
+                        }) {
                             Text("Stop Tracking")
                         }
                     }
@@ -87,14 +79,12 @@ fun App() {
     }
 }
 
-fun main() =  application {
-    val coroutineScope = rememberCoroutineScope()
-    Window(onCloseRequest = ::exitApplication) {
-        App()
+fun main() = application {
+    GlobalScope.launch {
+        TrackingServer.startServer()
     }
 
-
-    coroutineScope.launch {
-        TrackingServer.startServer()
+    Window(onCloseRequest = ::exitApplication) {
+        App()
     }
 }
