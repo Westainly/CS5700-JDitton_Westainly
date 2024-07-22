@@ -1,0 +1,141 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > TrackerViewHelper</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: TrackerViewHelper (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TrackerViewHelper</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/34)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import androidx.compose.runtime.getValue
+&nbsp;import androidx.compose.runtime.mutableStateOf
+&nbsp;import androidx.compose.runtime.setValue
+&nbsp;
+<b class="nc">&nbsp;class TrackerViewHelper(</b>
+<b class="nc">&nbsp;    private var shipment: Shipment</b>
+&nbsp;): ShipmentObserver {
+<b class="nc">&nbsp;    val shipmentID by mutableStateOf(shipment.id)</b>
+<b class="nc">&nbsp;    var shipmentNotes by mutableStateOf(shipment.notes)</b>
+&nbsp;        private set
+<b class="nc">&nbsp;    var shipmentUpdateHistory by mutableStateOf(shipment.updateHistory)</b>
+&nbsp;        private set
+<b class="nc">&nbsp;    var shipmentExpectedDelivery by mutableStateOf(shipment.expectedDelivery)</b>
+&nbsp;        private set
+<b class="nc">&nbsp;    var shipmentStatus by mutableStateOf(shipment.status)</b>
+&nbsp;        private set
+<b class="nc">&nbsp;    var shipmentLocation by mutableStateOf(shipment.currentLocation)</b>
+&nbsp;        private set
+&nbsp;
+<b class="nc">&nbsp;    init {</b>
+<b class="nc">&nbsp;        shipment.subscribe(this)</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    override fun notify(shipment: Shipment){
+<b class="nc">&nbsp;        this.shipment = shipment</b>
+<b class="nc">&nbsp;        shipmentNotes = shipment.notes</b>
+<b class="nc">&nbsp;        shipmentUpdateHistory = shipment.updateHistory</b>
+<b class="nc">&nbsp;        shipmentStatus = shipment.status</b>
+<b class="nc">&nbsp;        shipmentLocation = shipment.currentLocation</b>
+<b class="nc">&nbsp;        shipmentExpectedDelivery = shipment.expectedDelivery</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun unsub(){
+<b class="nc">&nbsp;        shipment.unsubscribe(this)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-16 17:21</div>
+</div>
+</body>
+</html>
