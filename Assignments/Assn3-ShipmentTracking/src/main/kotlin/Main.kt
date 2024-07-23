@@ -14,8 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.util.*
 
 const val DAYS1 = 86400
@@ -23,7 +22,7 @@ const val DAYS3 = 259200
 
 @Composable
 @Preview
-fun App() {
+fun app() {
     var shipmentIdSearch by remember { mutableStateOf("") }
     val shipments = remember { mutableStateListOf<TrackerViewHelper>() }
 
@@ -80,11 +79,16 @@ fun App() {
 }
 
 fun main() = application {
-    GlobalScope.launch {
+    val applicationScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+
+    applicationScope.launch {
         TrackingServer.startServer()
     }
 
-    Window(onCloseRequest = ::exitApplication) {
-        App()
+    Window(onCloseRequest = {
+        applicationScope.cancel()
+        exitApplication()
+    }) {
+        app()
     }
 }
