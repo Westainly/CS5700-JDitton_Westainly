@@ -17,8 +17,8 @@ import androidx.compose.ui.window.application
 import kotlinx.coroutines.*
 import java.util.*
 
-const val DAYS1 = 86400
-const val DAYS3 = 259200
+const val DAYS1 = 86400000
+const val DAYS3 = 259200000
 
 @Composable
 @Preview
@@ -55,6 +55,7 @@ fun app() {
                         Text("Status: ${it.shipmentStatus}")
                         Text("Location: ${it.shipmentLocation}")
                         Text("Expected Delivery: ${Date(it.shipmentExpectedDelivery)}")
+                        Text("Shipment Type: ${it.shipmentType}")
                         Spacer(modifier = Modifier.padding(8.dp))
                         Text("Status Updates:")
                         it.shipmentUpdateHistory.forEach { update ->

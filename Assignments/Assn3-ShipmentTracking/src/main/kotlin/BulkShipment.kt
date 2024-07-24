@@ -1,4 +1,5 @@
 class BulkShipment(status: String, id: String) : Shipment(status, id) {
+    override var shipmentType = ShipmentType.Bulk
     override var expectedDelivery: Long = 0
         set(value){
             if (value >= getCreationTime() + DAYS3) {

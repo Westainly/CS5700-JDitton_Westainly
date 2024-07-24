@@ -1,4 +1,5 @@
 class OvernightShipment(status: String, id: String) : Shipment(status, id){
+    override var shipmentType = ShipmentType.Overnight
     override var expectedDelivery: Long = 0
         set(value){
             if (value <= getCreationTime() + DAYS1) {

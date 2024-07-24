@@ -1,4 +1,5 @@
 class ExpressShipment(status: String, id: String) : Shipment(status, id) {
+    override var shipmentType = ShipmentType.Express
     override var expectedDelivery: Long = 0
         set(value){
             if (value <= getCreationTime() + DAYS3) {

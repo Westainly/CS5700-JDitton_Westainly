@@ -24,8 +24,10 @@ abstract class Shipment(
         Bulk
     }
 
+    open var shipmentType = ShipmentType.Standard
+
     fun subscribe(observer: ShipmentObserver){
-       subscribers.add(observer)
+        subscribers.add(observer)
     }
 
     fun unsubscribe(observer: ShipmentObserver){

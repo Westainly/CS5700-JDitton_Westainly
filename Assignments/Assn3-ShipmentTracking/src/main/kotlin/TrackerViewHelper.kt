@@ -16,6 +16,7 @@ class TrackerViewHelper(
         private set
     var shipmentLocation by mutableStateOf(shipment.currentLocation)
         private set
+    val shipmentType by mutableStateOf(shipment.shipmentType)
 
     init {
         shipment.subscribe(this)
