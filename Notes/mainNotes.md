@@ -7,3 +7,4 @@
 [July 11](/Notes/jul11.md) Factory Patterns  
 [July 16](/Notes/jul16.md) Short class - Threads/co-routines and assn3  
 [July 18](/Notes/Jul18.md) Command Pattern  
+[July 24](/Notes/Jul24.md) Midterm Review  
