@@ -91,8 +91,9 @@ Factory PAttern
 
 Simple Factory idiom
 - not considered a pattern
-- Not the same in every language
-- implementation is going to vary
+    - Not the same in every language
+    - implementation is going to vary
+- Not due to not being used. This idiom is used in many ways.
 
 
 Singleton Pattern
