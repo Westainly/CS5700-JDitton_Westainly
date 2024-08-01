@@ -1,0 +1,12 @@
+0039 #load the ASCII Char for the number 9 into r0
+F000 #draw the first character
+B3C0 #BEGIN OUTER LOOP set the timer to 60
+C100 #BEGIN INNER LOOP read timer into r1
+8120 #check if r1 is 0 (r2 will be 0 by default) and skip next instruction if true
+5006 #jump to address INNER LOOP
+0101 #put a 1 in r1
+2010 #subract r1 from from r0 and store in r0 (decrements the ascii value to display next number)
+F000 #draw digit in r0
+0130 #store the value of ascii character for 0 in r1
+8010 #check if displayed ascii character is 0 and skip if true
+5004 #jump to OUTER LOOP
