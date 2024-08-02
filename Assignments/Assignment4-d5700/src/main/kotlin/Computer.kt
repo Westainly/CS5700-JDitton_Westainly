@@ -180,7 +180,6 @@ class Computer {
                 ram.write(cpu.a, registerVal)
             } else {
                 rom.write(cpu.a, registerVal)
-                println("Note that this isn't normal to write to the ROM, but we added this for FUN!")
             }
         }
     }

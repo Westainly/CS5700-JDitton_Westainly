@@ -19,7 +19,6 @@ class ReadKeyboard: InstructionTemplate() {
         else {
             println("Invalid input. Please enter a valid hexadecimal digit.")
         }
-        println("Putting the value ${input.toInt().toUByte()} into register ${firstByte.toInt() and 0xF}")
         computerFacade.startCPU()
 
     }

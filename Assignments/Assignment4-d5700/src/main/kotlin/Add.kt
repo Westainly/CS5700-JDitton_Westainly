@@ -8,8 +8,6 @@ class Add : InstructionTemplate(){
 
         if (firstValue != null && secondValue != null)
         {
-            // println("First value:  ${firstValue} ")
-            // println("Second value:  ${secondValue} ")
             computerFacade.modifyRegister(secondByte.toInt() and 0xF, (firstValue + secondValue).toUByte())
         }
     }

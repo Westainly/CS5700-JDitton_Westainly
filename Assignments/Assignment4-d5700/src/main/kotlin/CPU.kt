@@ -17,9 +17,7 @@ class CPU {
 
     fun changeRegisterValue(register: Int, newVal: UByte)
     {
-        //println("Before modification: ${registers[register]}")
         registers[register] = newVal
-        //println("After modification: ${registers[register]}")
     }
 
     fun setP(newVal: Int)

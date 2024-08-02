@@ -3,7 +3,6 @@ package org.example
 @OptIn(ExperimentalUnsignedTypes::class)
 class ROM {
     private val memory = UByteArray(4 * 1024)
-    // This method is when we first load memory into ROM for execution
     fun load(memory: UByteArray)
     {
         var position = 0
