@@ -6,13 +6,7 @@ class Screen {
     private var display: UByteArray = UByteArray(64)
     fun drawToScreen(rX: UByte, row: Int, column: Int)
     {
-        try {
-            this.display[row * 8 + column] = rX
-        }
-        catch (e : Exception)
-        {
-            println("Attempted to draw to screen: $e")
-        }
+        this.display[row*8+column] = rX
         displayScreen()
     }
     private fun displayScreen()
@@ -29,5 +23,14 @@ class Screen {
                 counter = 0
             }
         }
+    }
+
+    fun getScreenValue(row: Int, column: Int): UByte
+    {
+        if (row * 8 + column >= this.display.size)
+        {
+            throw IllegalArgumentException("Out of bounds for screen")
+        }
+        return this.display[row * 8 + column]
     }
 }

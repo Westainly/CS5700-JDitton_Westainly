@@ -41,13 +41,19 @@ class Computer {
         cpuFuture?.cancel(true)
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class, ExperimentalStdlibApi::class)
+    @OptIn(ExperimentalUnsignedTypes::class)
     fun loadInROM()
     {
         println("Type in the path to the rom file:")
         val inputString: String = readln()
         val file = File(inputString).readBytes().map {it.toUByte()}.toUByteArray()
-        rom.load(file)
+        this.loadRom(file)
+    }
+
+    @OptIn(ExperimentalUnsignedTypes::class)
+    fun loadRom(fileInfo: UByteArray)
+    {
+        rom.load(fileInfo)
     }
 
     fun stop()
@@ -121,12 +127,33 @@ class Computer {
        cpu.setP(newVal)
     }
 
+    fun getA(): Int
+    {
+        return cpu.a
+    }
+
+    fun getM(): Boolean
+    {
+        return cpu.m
+    }
+
+
     fun drawToScreen(rX: Int, row: Int, column: Int)
     {
         val byte: UByte = getRegisterValue(rX) ?: throw IllegalArgumentException("Attempting to draw null item to screen!")
+        if (byte.toInt() > 127)
+        {
+            this.stop()
+            throw IllegalArgumentException("Given input is out of bounds.")
+        }
         ram.write(row * 8 + column, byte)
 
         screen.drawToScreen(byte, row, column)
+    }
+
+    fun getScreenValue(row: Int, column: Int): UByte
+    {
+        return this.screen.getScreenValue(row, column)
     }
 
     fun getP(): Int
@@ -156,6 +183,7 @@ class Computer {
         {
             if (data > 15)
             {
+                this.stop()
                 throw IllegalArgumentException("Value in register was greater than the limit for converting to ASCII!!!")
             }
 
@@ -178,7 +206,8 @@ class Computer {
         if (registerVal != null) {
             if (!cpu.m) {
                 ram.write(cpu.a, registerVal)
-            } else {
+            }
+            else {
                 rom.write(cpu.a, registerVal)
             }
         }

@@ -15,13 +15,19 @@ class ROM {
 
     fun write(index: Int, newVal: UByte)
     {
+        if (index >= memory.size)
+        {
+            throw IllegalArgumentException("Out of memory space")
+        }
         memory[index] = newVal
-
     }
 
     fun read(index: Int): UByte
     {
+        if (index >= memory.size)
+        {
+            throw IllegalArgumentException("Out of memory space")
+        }
         return this.memory[index]
-
     }
 }
