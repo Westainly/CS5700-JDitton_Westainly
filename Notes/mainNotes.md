@@ -8,3 +8,4 @@
 [July 16](/Notes/jul16.md) Short class - Threads/co-routines and assn3  
 [July 18](/Notes/Jul18.md) Command Pattern  
 [July 24](/Notes/Jul24.md) Midterm Review  
+[August 6](/Notes/aug6.md) Final Review
