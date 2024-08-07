@@ -8,7 +8,7 @@ class FloatStartState(detector: FloatDetector) : FloatState(detector) {
         } else if (string in "0") {
             detector.state = FloatZeroState(detector)
         } else if (string in "123456789") {
-
+            detector.state = FloatNumberState(detector)
         } else {
             detector.state = InvalidState(detector)
         }
